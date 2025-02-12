@@ -9,6 +9,7 @@ import { useBoundActions } from '../../hooks/useBoundActions';
 
 export enum NavTab {
   Chats = 'Chats',
+  Projects = 'Projects',
   Calls = 'Calls',
   Stories = 'Stories',
 }
