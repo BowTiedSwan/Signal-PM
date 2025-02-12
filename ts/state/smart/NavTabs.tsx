@@ -30,6 +30,7 @@ export type SmartNavTabsProps = Readonly<{
   onToggleNavTabsCollapse(navTabsCollapsed: boolean): void;
   renderCallsTab(props: NavTabPanelProps): JSX.Element;
   renderChatsTab(props: NavTabPanelProps): JSX.Element;
+  renderProjectsTab(props: NavTabPanelProps): JSX.Element;
   renderStoriesTab(props: NavTabPanelProps): JSX.Element;
 }>;
 
@@ -38,6 +39,7 @@ export const SmartNavTabs = memo(function SmartNavTabs({
   onToggleNavTabsCollapse,
   renderCallsTab,
   renderChatsTab,
+  renderProjectsTab,
   renderStoriesTab,
 }: SmartNavTabsProps): JSX.Element {
   const i18n = useSelector(getIntl);
@@ -52,6 +54,7 @@ export const SmartNavTabs = memo(function SmartNavTabs({
   const unreadCallsCount = useSelector(getCallHistoryUnreadCount);
   const hasFailedStorySends = useSelector(getHasAnyFailedStorySends);
   const hasPendingUpdate = useSelector(getHasPendingUpdate);
+  const unreadProjectsCount = 0; // TODO: Add projects unread count
 
   const { toggleProfileEditor } = useGlobalModalActions();
   const { startUpdate } = useUpdatesActions();
@@ -82,6 +85,7 @@ export const SmartNavTabs = memo(function SmartNavTabs({
       onToggleProfileEditor={toggleProfileEditor}
       renderCallsTab={renderCallsTab}
       renderChatsTab={renderChatsTab}
+      renderProjectsTab={renderProjectsTab}
       renderStoriesTab={renderStoriesTab}
       selectedNavTab={selectedNavTab}
       storiesEnabled={storiesEnabled}
@@ -89,6 +93,7 @@ export const SmartNavTabs = memo(function SmartNavTabs({
       unreadCallsCount={unreadCallsCount}
       unreadConversationsStats={unreadConversationsStats}
       unreadStoriesCount={unreadStoriesCount}
+      unreadProjectsCount={unreadProjectsCount}
     />
   );
 });

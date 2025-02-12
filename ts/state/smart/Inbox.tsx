@@ -1,44 +1,50 @@
-// Copyright 2022 Signal Messenger, LLC
+// Copyright 2024 Signal Messenger, LLC
 // SPDX-License-Identifier: AGPL-3.0-only
 
 import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
+import type { NavTabPanelProps } from '../../components/NavTabs';
+import type { SmartNavTabsProps } from './NavTabs';
+import { SmartNavTabs } from './NavTabs';
+import { SmartChatsTab } from './ChatsTab';
+import { SmartCallsTab } from './CallsTab';
+import { SmartStoriesTab } from './StoriesTab';
+import { SmartProjectsTab } from './ProjectsTab';
 import { Inbox } from '../../components/Inbox';
 import { isNightly } from '../../util/version';
 import { getIntl } from '../selectors/user';
 import { SmartCustomizingPreferredReactionsModal } from './CustomizingPreferredReactionsModal';
 import { getIsCustomizingPreferredReactions } from '../selectors/preferredReactions';
-import type { SmartNavTabsProps } from './NavTabs';
-import { SmartNavTabs } from './NavTabs';
-import { SmartStoriesTab } from './StoriesTab';
-import { SmartCallsTab } from './CallsTab';
 import { useItemsActions } from '../ducks/items';
 import { getNavTabsCollapsed } from '../selectors/items';
-import { SmartChatsTab } from './ChatsTab';
 import { getHasInitialLoadCompleted } from '../selectors/app';
 import {
   getInboxEnvelopeTimestamp,
   getInboxFirstEnvelopeTimestamp,
 } from '../selectors/inbox';
 
-function renderChatsTab() {
-  return <SmartChatsTab />;
+function renderChatsTab(props: NavTabPanelProps) {
+  return <SmartChatsTab {...props} />;
 }
 
-function renderCallsTab() {
-  return <SmartCallsTab />;
+function renderCallsTab(props: NavTabPanelProps) {
+  return <SmartCallsTab {...props} />;
 }
 
-function renderCustomizingPreferredReactionsModal() {
-  return <SmartCustomizingPreferredReactionsModal />;
+function renderProjectsTab(props: NavTabPanelProps) {
+  return <SmartProjectsTab {...props} />;
+}
+
+function renderStoriesTab(props: NavTabPanelProps) {
+  return <SmartStoriesTab {...props} />;
 }
 
 function renderNavTabs(props: SmartNavTabsProps) {
   return <SmartNavTabs {...props} />;
 }
 
-function renderStoriesTab() {
-  return <SmartStoriesTab />;
+function renderCustomizingPreferredReactionsModal() {
+  return <SmartCustomizingPreferredReactionsModal />;
 }
 
 export const SmartInbox = memo(function SmartInbox(): JSX.Element {
@@ -65,11 +71,12 @@ export const SmartInbox = memo(function SmartInbox(): JSX.Element {
       onToggleNavTabsCollapse={toggleNavTabsCollapse}
       renderChatsTab={renderChatsTab}
       renderCallsTab={renderCallsTab}
+      renderProjectsTab={renderProjectsTab}
+      renderStoriesTab={renderStoriesTab}
+      renderNavTabs={renderNavTabs}
       renderCustomizingPreferredReactionsModal={
         renderCustomizingPreferredReactionsModal
       }
-      renderNavTabs={renderNavTabs}
-      renderStoriesTab={renderStoriesTab}
     />
   );
 });

@@ -195,12 +195,14 @@ export type NavTabsProps = Readonly<{
   renderCallsTab(props: NavTabPanelProps): JSX.Element;
   renderChatsTab(props: NavTabPanelProps): JSX.Element;
   renderStoriesTab(props: NavTabPanelProps): JSX.Element;
+  renderProjectsTab(props: NavTabPanelProps): JSX.Element;
   selectedNavTab: NavTab;
   storiesEnabled: boolean;
   theme: ThemeType;
   unreadCallsCount: number;
   unreadConversationsStats: UnreadStats;
   unreadStoriesCount: number;
+  unreadProjectsCount: number;
 }>;
 
 export function NavTabs({
@@ -218,12 +220,14 @@ export function NavTabs({
   renderCallsTab,
   renderChatsTab,
   renderStoriesTab,
+  renderProjectsTab,
   selectedNavTab,
   storiesEnabled,
   theme,
   unreadCallsCount,
   unreadConversationsStats,
   unreadStoriesCount,
+  unreadProjectsCount,
 }: NavTabsProps): JSX.Element {
   function handleSelectionChange(key: Key) {
     onNavTabSelected(key as NavTab);
@@ -260,6 +264,13 @@ export function NavTabs({
             label={i18n('icu:NavTabs__ItemLabel--Chats')}
             iconClassName="NavTabs__ItemIcon--Chats"
             unreadStats={unreadConversationsStats}
+          />
+          <NavTabsItem
+            i18n={i18n}
+            id={NavTab.Projects}
+            label={i18n('icu:NavTabs__ItemLabel--Projects')}
+            iconClassName="NavTabs__ItemIcon--Projects"
+            unreadStats={null}
           />
           <NavTabsItem
             i18n={i18n}
@@ -396,13 +407,56 @@ export function NavTabs({
         </div>
       </nav>
       <TabPanel id={NavTab.Chats} className="NavTabs__TabPanel">
-        {renderChatsTab}
+        {renderChatsTab({
+          otherTabsUnreadStats: {
+            unreadCount: unreadCallsCount + unreadStoriesCount + unreadProjectsCount,
+            unreadMentionsCount: 0,
+            markedUnread: false,
+          },
+          collapsed: navTabsCollapsed,
+          hasFailedStorySends,
+          hasPendingUpdate,
+          onToggleCollapse: onToggleNavTabsCollapse,
+        })}
+      </TabPanel>
+      <TabPanel id={NavTab.Projects} className="NavTabs__TabPanel">
+        {renderProjectsTab({
+          otherTabsUnreadStats: {
+            unreadCount: unreadCallsCount + unreadStoriesCount + unreadConversationsStats.unreadCount,
+            unreadMentionsCount: 0,
+            markedUnread: false,
+          },
+          collapsed: navTabsCollapsed,
+          hasFailedStorySends,
+          hasPendingUpdate,
+          onToggleCollapse: onToggleNavTabsCollapse,
+        })}
       </TabPanel>
       <TabPanel id={NavTab.Calls} className="NavTabs__TabPanel">
-        {renderCallsTab}
+        {renderCallsTab({
+          otherTabsUnreadStats: {
+            unreadCount: unreadStoriesCount + unreadConversationsStats.unreadCount + unreadProjectsCount,
+            unreadMentionsCount: 0,
+            markedUnread: false,
+          },
+          collapsed: navTabsCollapsed,
+          hasFailedStorySends,
+          hasPendingUpdate,
+          onToggleCollapse: onToggleNavTabsCollapse,
+        })}
       </TabPanel>
       <TabPanel id={NavTab.Stories} className="NavTabs__TabPanel">
-        {renderStoriesTab}
+        {renderStoriesTab({
+          otherTabsUnreadStats: {
+            unreadCount: unreadCallsCount + unreadConversationsStats.unreadCount + unreadProjectsCount,
+            unreadMentionsCount: 0,
+            markedUnread: false,
+          },
+          collapsed: navTabsCollapsed,
+          hasFailedStorySends,
+          hasPendingUpdate,
+          onToggleCollapse: onToggleNavTabsCollapse,
+        })}
       </TabPanel>
     </Tabs>
   );

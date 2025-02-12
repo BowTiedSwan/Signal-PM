@@ -8,6 +8,7 @@ import type { LocalizerType } from '../types/Util';
 import * as log from '../logging/log';
 import { SECOND, DAY } from '../util/durations';
 import type { SmartNavTabsProps } from '../state/smart/NavTabs';
+import type { NavTabPanelProps } from './NavTabs';
 
 export type PropsType = {
   firstEnvelopeTimestamp: number | undefined;
@@ -18,11 +19,12 @@ export type PropsType = {
   isCustomizingPreferredReactions: boolean;
   navTabsCollapsed: boolean;
   onToggleNavTabsCollapse: (navTabsCollapsed: boolean) => unknown;
-  renderCallsTab: () => JSX.Element;
-  renderChatsTab: () => JSX.Element;
+  renderCallsTab: (props: NavTabPanelProps) => JSX.Element;
+  renderChatsTab: (props: NavTabPanelProps) => JSX.Element;
+  renderProjectsTab: (props: NavTabPanelProps) => JSX.Element;
   renderCustomizingPreferredReactionsModal: () => JSX.Element;
   renderNavTabs: (props: SmartNavTabsProps) => JSX.Element;
-  renderStoriesTab: () => JSX.Element;
+  renderStoriesTab: (props: NavTabPanelProps) => JSX.Element;
 };
 
 const PART_COUNT = 16;
@@ -38,6 +40,7 @@ export function Inbox({
   onToggleNavTabsCollapse,
   renderCallsTab,
   renderChatsTab,
+  renderProjectsTab,
   renderCustomizingPreferredReactionsModal,
   renderNavTabs,
   renderStoriesTab,
@@ -199,6 +202,7 @@ export function Inbox({
           onToggleNavTabsCollapse,
           renderChatsTab,
           renderCallsTab,
+          renderProjectsTab,
           renderStoriesTab,
         })}
       </div>

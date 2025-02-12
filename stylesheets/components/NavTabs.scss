@@ -180,6 +180,14 @@ $NavTabs__ProfileAvatar__size: 28px;
   }
 }
 
+.NavTabs__ItemIcon--Projects {
+  @include NavTabs__Icon('../images/icons/v3/folder/folder.svg');
+  .NavTabs__Item:active &,
+  .NavTabs__Item[aria-selected='true'] & {
+    @include NavTabs__Icon('../images/icons/v3/folder/folder-fill.svg');
+  }
+}
+
 .NavTabs__ItemIcon--Calls {
   @include NavTabs__Icon('../images/icons/v3/phone/phone.svg');
   .NavTabs__Item:active &,
